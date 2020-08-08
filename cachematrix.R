@@ -1,25 +1,25 @@
 makeVector <- function(x = numeric()) {
-  m <- NULL
+  inv <- NULL  ##initializing inverse as null
   set <- function(y) {
     x <<- y
-    m <<- NULL
+    inv <<- NULL
   }
-  get <- function() x
-  setmean <- function(mean) m <<- mean
-  getmean <- function() m
+  get <- function() x  ## function to get matrix
+  setmean <- function(mean) inv <<- mean
+  getmean <- function() inv   ## function to get the inverse of the matrix
   list(set = set, get = get,
        setmean = setmean,
        getmean = getmean)
 }
 
-cachemean <- function(x, ...) {
+cachemean <- function(x, ...) { ## get cache data
   m <- x$getmean()
-  if(!is.null(m)) {
+  if(!is.null(inv)) {  ## checking if inverse is null
     message("getting cached data")
-    return(m)
+    return(inv) ## returns inverse value  
   }
-  data <- x$get()
+  data <- x$get() # calculates inverse value
   m <- mean(data, ...)
-  x$setmean(m)
+  x$setmean(inv)
   m
 }
